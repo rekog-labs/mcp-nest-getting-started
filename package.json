@@ -17,16 +17,23 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:build": "docker build -t mcp-nest-app .",
+    "docker:run": "docker run -p 3000:3000 mcp-nest-app",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.16.0",
     "@nestjs/common": "^11.1.4",
     "@nestjs/core": "^11.1.4",
     "@nestjs/platform-express": "^11.1.4",
-    "@rekog/mcp-nest": "1.7.0-alpha.9",
+    "@rekog/mcp-nest": "1.7.0-alpha.10",
     "axios": "^1.10.0",
     "cookie-parser": "^1.4.7",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.2.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "zod": "^3.24.4"
@@ -44,6 +51,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.16.4",
     "@types/supertest": "^6.0.2",
+    "@types/jsonwebtoken": "^9.0.10",
     "dotenv": "^16.4.7",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",

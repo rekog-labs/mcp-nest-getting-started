@@ -1,5 +1,7 @@
 ## Remote MCP Tools (with Claude Desktop)
 
+### Local Development
+
 Install the dependencies:
 
 ```bash
@@ -13,6 +15,49 @@ npm run start
 ```
 
 Your server will be running at `http://localhost:3000/sse`.
+
+### Docker Deployment
+
+#### Using Docker
+
+Build and run the container:
+
+```bash
+# Build the Docker image
+docker build -t mcp-nest-app .
+
+# Run the container
+docker run -p 3000:3000 \
+  -e GITHUB_CLIENT_ID=your_client_id \
+  -e GITHUB_CLIENT_SECRET=your_client_secret \
+  -e JWT_SECRET=your_jwt_secret \
+  -e SERVER_URL=http://localhost:3000 \
+  mcp-nest-app
+```
+
+#### Using Docker Compose
+
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` file with your configuration values.
+
+3. Run with Docker Compose:
+```bash
+docker-compose up -d
+```
+
+#### Health Checks
+
+The application includes several health check endpoints:
+
+- `GET /health` - General health status
+- `GET /health/ready` - Readiness probe
+- `GET /health/live` - Liveness probe
+
+These endpoints return JSON responses with status information and are used by Docker's health check system.
 
 ## Connecting to Claude Desktop
 
