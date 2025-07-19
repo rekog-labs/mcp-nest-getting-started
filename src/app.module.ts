@@ -4,20 +4,27 @@ dotenv.config();
 import { Module } from '@nestjs/common';
 import { GitHubOAuthProvider, McpAuthModule, McpModule } from '@rekog/mcp-nest';
 import { randomUUID } from 'crypto';
-import { CountingTool } from './counting.tool';
-import { JwtAuthGuard } from '@rekog/mcp-nest/dist/authz/guards/jwt-auth.guard';
+import { JwksAuthGuard } from './guards/jwks-auth.guard';
+import { HealthController } from './controllers/health.controller';
+import { WellKnownController } from './controllers/well-known.controller';
+import { McpBinTools } from './tools/mcp-bin.tools';
 
 @Module({
   imports: [
-    McpAuthModule.forRoot({
-      provider: GitHubOAuthProvider,
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      jwtSecret: process.env.JWT_SECRET!,
-      serverUrl: process.env.SERVER_URL,
-      nodeEnv: process.env.NODE_ENV,
-      apiPrefix: 'remote-auth',
-    }),
+    // McpAuthModule.forRoot({
+    //   provider: GitHubOAuthProvider,
+    //   clientId: process.env.GITHUB_CLIENT_ID!,
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    //   jwtSecret: process.env.JWT_SECRET!,
+    //   serverUrl: process.env.SERVER_URL,
+    //   nodeEnv: process.env.NODE_ENV,
+    //   apiPrefix: 'remote-auth',
+    //   skipWellKnownOAuthAuthorizationServer: true,
+    //   // endpoints: {
+    //   //   authorize: 'http://localhost:3002/authorize',
+    //   //   callback: 'http://localhost:3002/auth/callback',
+    //   // },
+    // }),
 
     McpModule.forRoot({
       name: 'remote',
@@ -38,9 +45,10 @@ import { JwtAuthGuard } from '@rekog/mcp-nest/dist/authz/guards/jwt-auth.guard';
         sessionIdGenerator: () => randomUUID(),
         statelessMode: false,
       },
-      guards: [JwtAuthGuard],
+      guards: [JwksAuthGuard],
     }),
   ],
-  providers: [CountingTool],
+  controllers: [HealthController, WellKnownController],
+  providers: [McpBinTools],
 })
 export class AppModule {}
