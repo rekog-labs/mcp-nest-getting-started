@@ -21,8 +21,8 @@ import { McpBinTools } from './tools/mcp-bin.tools';
     //   apiPrefix: 'remote-auth',
     //   skipWellKnownOAuthAuthorizationServer: true,
     //   // endpoints: {
-    //   //   authorize: 'http://localhost:3002/authorize',
-    //   //   callback: 'http://localhost:3002/auth/callback',
+    //   //   authorize: 'http://localhost:3001/authorize',
+    //   //   callback: 'http://localhost:3001/auth/callback',
     //   // },
     // }),
 

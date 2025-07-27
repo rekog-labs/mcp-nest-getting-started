@@ -29,7 +29,7 @@
     "@nestjs/common": "^11.1.4",
     "@nestjs/core": "^11.1.4",
     "@nestjs/platform-express": "^11.1.4",
-    "@rekog/mcp-nest": "1.7.0-alpha.10",
+    "@rekog/mcp-nest": "1.7.0-beta.0",
     "axios": "^1.10.0",
     "cookie-parser": "^1.4.7",
     "jsonwebtoken": "^9.0.2",

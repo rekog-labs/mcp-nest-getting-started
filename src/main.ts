@@ -13,7 +13,7 @@ async function bootstrap() {
     origin: true,
     credentials: true,
   });
-  await app.listen(3001);
-  console.log('MCP OAuth Server running on http://localhost:3001');
+  await app.listen(3002);
+  console.log('MCP OAuth Server running on http://localhost:3002');
 }
 bootstrap();
