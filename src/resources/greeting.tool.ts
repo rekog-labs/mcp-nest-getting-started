@@ -170,8 +170,7 @@ export class GreetingTool {
       name: z.string().describe('The name of the person to greet'),
       language: z
         .string()
-        .describe('Language code (e.g., "en", "es", "fr", "de")')
-        .default('en'),
+        .describe('Language code (e.g., "en", "es", "fr", "de")'),
     }),
     outputSchema: z.object({
       greeting: z.string(),
@@ -191,6 +190,17 @@ export class GreetingTool {
     context: Context,
     request: Request,
   ) {
+    if (!name || !language) {
+      console.log('[greeting.tool.ts] Exiting sayHelloStructured (missing args)');
+      return {
+        content: [
+          {
+            type: 'text',
+            text: 'Error: Missing required parameters name and language.',
+          },
+        ],
+      };
+    }
     console.log('[greeting.tool.ts] Entering sayHelloStructured with args:', {
       name,
       language,
