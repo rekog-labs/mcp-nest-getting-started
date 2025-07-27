@@ -1,7 +1,9 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { McpModule } from '@rekog/mcp-nest';
-import { CountingTool } from './counting.tool';
+import { GreetingPrompt } from './resources/greeting.prompt';
+import { GreetingResource } from './resources/greeting.resource';
+import { GreetingTool } from './resources/greeting.tool';
 
 @Module({
   imports: [
@@ -10,6 +12,6 @@ import { CountingTool } from './counting.tool';
       version: '1.0.0',
     }),
   ],
-  providers: [CountingTool],
+  providers: [GreetingPrompt, GreetingResource, GreetingTool],
 })
 export class AppModule {}
