@@ -12,18 +12,21 @@ export class GreetingPrompt {
     name: 'multilingual-greeting-guide',
     description:
       'Simple instruction for greeting users in their native languages',
-    parameters: z.object({}),
+    parameters: z.object({
+      name: z.string().describe('The name of the person to greet'),
+      language: z.string().describe('The language to use for the greeting'),
+    }),
   })
-  getGreetingInstructions() {
+  getGreetingInstructions({ name, language }) {
     console.log('[greeting.prompt.ts] Entering getGreetingInstructions');
     const result = {
-      description: 'Guide for greeting users in their native languages',
+      description: 'Greet users in their native languages!',
       messages: [
         {
           role: 'user',
           content: {
             type: 'text',
-            text: 'Greet users in their native languages!',
+            text: `Greet ${name} in their preferred language: ${language}`,
           },
         },
       ],
