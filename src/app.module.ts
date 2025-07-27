@@ -5,6 +5,7 @@ import { GreetingPrompt } from './resources/greeting.prompt';
 import { GreetingResource } from './resources/greeting.resource';
 import { GreetingTool } from './resources/greeting.tool';
 
+console.log('[app.module.ts] Defining AppModule');
 @Module({
   imports: [
     McpModule.forRoot({
@@ -14,4 +15,9 @@ import { GreetingTool } from './resources/greeting.tool';
   ],
   providers: [GreetingPrompt, GreetingResource, GreetingTool],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log('[app.module.ts] AppModule constructed');
+  }
+}
+console.log('[app.module.ts] AppModule defined');

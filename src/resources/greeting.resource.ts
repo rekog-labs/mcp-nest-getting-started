@@ -3,7 +3,9 @@ import { Resource, ResourceTemplate } from '@rekog/mcp-nest';
 
 @Injectable({ scope: Scope.REQUEST })
 export class GreetingResource {
-  constructor() {}
+  constructor() {
+    console.log('[greeting.resource.ts] GreetingResource constructed');
+  }
 
   @Resource({
     name: 'languages-informal-greetings',
@@ -12,6 +14,10 @@ export class GreetingResource {
     uri: 'mcp://languages/informal-greetings',
   })
   getLanguagesInformalGreetings({ uri }) {
+    console.log(
+      '[greeting.resource.ts] Entering getLanguagesInformalGreetings with uri:',
+      uri,
+    );
     const languages = {
       en: 'Hey',
       es: 'Qué tal',
@@ -23,8 +29,7 @@ export class GreetingResource {
       ko: '안녕',
       zh: '嗨',
     };
-
-    return {
+    const result = {
       contents: [
         {
           uri: uri,
@@ -33,15 +38,26 @@ export class GreetingResource {
         },
       ],
     };
+    console.log(
+      '[greeting.resource.ts] Exiting getLanguagesInformalGreetings with result:',
+      result,
+    );
+    return result;
   }
 
   @ResourceTemplate({
     name: 'user-language',
-    description: 'Get a specific user\'s preferred language',
+    description: "Get a specific user's preferred language",
     mimeType: 'application/json',
     uriTemplate: 'mcp://users/{name}',
   })
   getUserLanguage({ uri, name }) {
+    console.log(
+      '[greeting.resource.ts] Entering getUserLanguage with uri:',
+      uri,
+      'name:',
+      name,
+    );
     const users = {
       alice: 'en',
       carlos: 'es',
@@ -53,10 +69,8 @@ export class GreetingResource {
       sofia: 'it',
       joão: 'pt',
     };
-
     const language = users[name.toLowerCase()] || 'en';
-
-    return {
+    const result = {
       contents: [
         {
           uri: uri,
@@ -65,5 +79,10 @@ export class GreetingResource {
         },
       ],
     };
+    console.log(
+      '[greeting.resource.ts] Exiting getUserLanguage with result:',
+      result,
+    );
+    return result;
   }
 }

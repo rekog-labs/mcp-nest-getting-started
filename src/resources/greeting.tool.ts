@@ -6,6 +6,10 @@ import { Context, Tool } from '@rekog/mcp-nest';
 
 @Injectable()
 export class GreetingTool {
+  constructor() {
+    console.log('[greeting.tool.ts] GreetingTool constructed');
+  }
+
   @Tool({
     name: 'greet-user',
     description:
@@ -26,6 +30,10 @@ export class GreetingTool {
     },
   })
   async sayHello({ name, language }, context: Context, request: Request) {
+    console.log('[greeting.tool.ts] Entering sayHello with args:', {
+      name,
+      language,
+    });
     const informalGreetings = {
       en: 'Hey',
       es: 'Qué tal',
@@ -44,13 +52,13 @@ export class GreetingTool {
     const totalSteps = 5;
     for (let i = 0; i < totalSteps; i++) {
       await new Promise((resolve) => setTimeout(resolve, 100));
-
       await context.reportProgress({
         progress: (i + 1) * 20,
         total: 100,
       } as Progress);
     }
 
+    console.log('[greeting.tool.ts] Exiting sayHello with result:', greeting);
     return greeting;
   }
 
@@ -70,10 +78,13 @@ export class GreetingTool {
     },
   })
   async sayHelloElicitation({ name }, context: Context, request: Request) {
+    console.log('[greeting.tool.ts] Entering sayHelloElicitation with args:', {
+      name,
+    });
     try {
       const res = context.mcpServer.server.getClientCapabilities();
       if (!res?.elicitation) {
-        return {
+        const result = {
           content: [
             {
               type: 'text',
@@ -81,6 +92,11 @@ export class GreetingTool {
             },
           ],
         };
+        console.log(
+          '[greeting.tool.ts] Exiting sayHelloElicitation (no elicitation) with result:',
+          result,
+        );
+        return result;
       }
 
       const response = await context.mcpServer.server.elicitInput({
@@ -123,16 +139,27 @@ export class GreetingTool {
         zh: '嗨',
       };
 
-      const greetingWord = informalGreetings[selectedLanguage] || informalGreetings['en'];
+      const greetingWord =
+        informalGreetings[selectedLanguage] || informalGreetings['en'];
       const greeting = `${greetingWord}, ${name}!`;
 
-      return {
+      const result = {
         content: [{ type: 'text', text: greeting }],
       };
+      console.log(
+        '[greeting.tool.ts] Exiting sayHelloElicitation with result:',
+        result,
+      );
+      return result;
     } catch (error) {
-      return {
+      const result = {
         content: [{ type: 'text', text: `Error: ${error.message}` }],
       };
+      console.log(
+        '[greeting.tool.ts] Exiting sayHelloElicitation with error:',
+        error,
+      );
+      return result;
     }
   }
 
@@ -164,6 +191,10 @@ export class GreetingTool {
     context: Context,
     request: Request,
   ) {
+    console.log('[greeting.tool.ts] Entering sayHelloStructured with args:', {
+      name,
+      language,
+    });
     const informalGreetings = {
       en: 'Hey',
       es: 'Qué tal',
@@ -195,7 +226,6 @@ export class GreetingTool {
     const totalSteps = 5;
     for (let i = 0; i < totalSteps; i++) {
       await new Promise((resolve) => setTimeout(resolve, 100));
-
       await context.reportProgress({
         progress: (i + 1) * 20,
         total: 100,
@@ -208,7 +238,7 @@ export class GreetingTool {
       languageName,
     };
 
-    return {
+    const result = {
       structuredContent,
       content: [
         {
@@ -217,5 +247,10 @@ export class GreetingTool {
         },
       ],
     };
+    console.log(
+      '[greeting.tool.ts] Exiting sayHelloStructured with result:',
+      result,
+    );
+    return result;
   }
 }
