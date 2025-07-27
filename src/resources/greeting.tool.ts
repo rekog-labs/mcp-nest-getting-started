@@ -6,9 +6,7 @@ import { Context, Tool } from '@rekog/mcp-nest';
 
 @Injectable()
 export class GreetingTool {
-  constructor() {
-    console.log('[greeting.tool.ts] GreetingTool constructed');
-  }
+  constructor() {}
 
   @Tool({
     name: 'greet-user',
@@ -29,13 +27,7 @@ export class GreetingTool {
     },
   })
   async sayHello({ name, language }, context: Context, request: Request) {
-    console.log('[greeting.tool.ts] Entering sayHello with args:', {
-      name,
-      language,
-    });
-
     if (!name || !language) {
-      console.log('[greeting.tool.ts] Exiting sayHello (missing args)');
       return {
         content: [
           {
@@ -70,7 +62,6 @@ export class GreetingTool {
       } as Progress);
     }
 
-    console.log('[greeting.tool.ts] Exiting sayHello with result:', greeting);
     return greeting;
   }
 
@@ -90,9 +81,6 @@ export class GreetingTool {
     },
   })
   async sayHelloElicitation({ name }, context: Context, request: Request) {
-    console.log('[greeting.tool.ts] Entering sayHelloElicitation with args:', {
-      name,
-    });
     try {
       const res = context.mcpServer.server.getClientCapabilities();
       if (!res?.elicitation) {
@@ -100,14 +88,10 @@ export class GreetingTool {
           content: [
             {
               type: 'text',
-              text: 'Elicitation is not supported by the server. Thus this tool cannot be used.',
+              text: 'Elicitation is not supported by the client. Thus this tool cannot be used.',
             },
           ],
         };
-        console.log(
-          '[greeting.tool.ts] Exiting sayHelloElicitation (no elicitation) with result:',
-          result,
-        );
         return result;
       }
 
@@ -158,19 +142,12 @@ export class GreetingTool {
       const result = {
         content: [{ type: 'text', text: greeting }],
       };
-      console.log(
-        '[greeting.tool.ts] Exiting sayHelloElicitation with result:',
-        result,
-      );
+
       return result;
     } catch (error) {
       const result = {
         content: [{ type: 'text', text: `Error: ${error.message}` }],
       };
-      console.log(
-        '[greeting.tool.ts] Exiting sayHelloElicitation with error:',
-        error,
-      );
       return result;
     }
   }
@@ -213,10 +190,7 @@ export class GreetingTool {
         ],
       };
     }
-    console.log('[greeting.tool.ts] Entering sayHelloStructured with args:', {
-      name,
-      language,
-    });
+
     const informalGreetings = {
       en: 'Hey',
       es: 'Qué tal',
@@ -269,10 +243,7 @@ export class GreetingTool {
         },
       ],
     };
-    console.log(
-      '[greeting.tool.ts] Exiting sayHelloStructured with result:',
-      result,
-    );
+
     return result;
   }
 }

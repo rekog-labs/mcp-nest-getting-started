@@ -4,9 +4,7 @@ import { z } from 'zod';
 
 @Injectable({ scope: Scope.REQUEST })
 export class GreetingPrompt {
-  constructor() {
-    console.log('[greeting.prompt.ts] GreetingPrompt constructed');
-  }
+  constructor() {}
 
   @Prompt({
     name: 'multilingual-greeting-guide',
@@ -18,7 +16,6 @@ export class GreetingPrompt {
     }),
   })
   getGreetingInstructions({ name, language }) {
-    console.log('[greeting.prompt.ts] Entering getGreetingInstructions');
     const result = {
       description: 'Greet users in their native languages!',
       messages: [
@@ -31,10 +28,6 @@ export class GreetingPrompt {
         },
       ],
     };
-    console.log(
-      '[greeting.prompt.ts] Exiting getGreetingInstructions with result:',
-      result,
-    );
     return result;
   }
 }
