@@ -18,8 +18,7 @@ export class GreetingTool {
       name: z.string().describe('The name of the person to greet'),
       language: z
         .string()
-        .describe('Language code (e.g., "en", "es", "fr", "de")')
-        .default('en'),
+        .describe('Language code (e.g., "en", "es", "fr", "de")'),
     }),
     annotations: {
       title: 'Multi-language Greeting Tool',
@@ -34,6 +33,19 @@ export class GreetingTool {
       name,
       language,
     });
+
+    if (!name || !language) {
+      console.log('[greeting.tool.ts] Exiting sayHello (missing args)');
+      return {
+        content: [
+          {
+            type: 'text',
+            text: 'Error: Missing required parameters name and language.',
+          },
+        ],
+      };
+    }
+
     const informalGreetings = {
       en: 'Hey',
       es: 'Qué tal',
