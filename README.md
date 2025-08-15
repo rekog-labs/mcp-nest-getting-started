@@ -1,4 +1,4 @@
-## Remote MCP Tools (with Claude Desktop)
+## Remote MCP Tools
 
 Install the dependencies:
 
@@ -12,7 +12,22 @@ Start your MCP server with:
 npm run start
 ```
 
-Your server will be running at `http://localhost:3000/sse`.
+Your server will be running at `http://localhost:3000/mcp`.
+
+You can quickly try it out with the command below:
+
+```bash
+bunx @modelcontextprotocol/inspector@0.16.2 \
+  --cli http://localhost:3000/mcp \
+  --transport http \
+  --method tools/list
+```
+
+Or try it out interactively using the inspector:
+
+```bash
+bunx @modelcontextprotocol/inspector@0.16.2
+```
 
 ## Connecting to Claude Desktop
 

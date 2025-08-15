@@ -2,6 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Tool, Context } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
+const countCharactersParams = z.object({
+  text: z.string().describe('The text to analyze'),
+  character: z.string().describe('The character to count'),
+});
+
 @Injectable()
 export class CountingTool {
   constructor() {}
@@ -9,12 +14,12 @@ export class CountingTool {
   @Tool({
     name: 'count-characters',
     description: 'Counts occurrences of a specific character in text',
-    parameters: z.object({
-      text: z.string().describe('The text to analyze'),
-      character: z.string().describe('The character to count'),
-    }),
+    parameters: countCharactersParams,
   })
-  async countCharacters({ text, character }, context: Context) {
+  countCharacters(
+    { text, character }: z.infer<typeof countCharactersParams>,
+    context: Context,
+  ) {
     let count = 0;
 
     // Simple counting logic that's 100% accurate
